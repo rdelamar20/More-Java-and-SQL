@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/rdela/Desktop/school/Database Class/final/Final_RyanDelamar_CIS171.2165.db" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><current_tab id="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1523"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="Coaches"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Coaches" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk=""><sort/><column_widths/><filter_values/><display_formats/><hidden_columns/><plot_y_axes/></table><table schema="main" name="Contact" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk=""><sort/><column_widths/><filter_values/><display_formats/><hidden_columns/><plot_y_axes/></table><table schema="main" name="Leagues" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk=""><sort/><column_widths/><filter_values/><display_formats/><hidden_columns/><plot_y_axes/></table><table schema="main" name="Players" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk=""><sort/><column_widths><column index="7" value="136"/></column_widths><filter_values/><display_formats/><hidden_columns/><plot_y_axes/></table><table schema="main" name="School" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk=""><sort/><column_widths/><filter_values/><display_formats/><hidden_columns/><plot_y_axes/></table><table schema="main" name="Team" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk=""><sort/><column_widths/><filter_values/><display_formats/><hidden_columns/><plot_y_axes/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">/* Drop statements to clear values */
+DROP TABLE IF EXISTS LEAGUES;
+DROP TABLE IF EXISTS COACHES;
+DROP TABLE IF EXISTS PLAYERS;
+DROP TABLE IF EXISTS CONTACT;
+DROP TABLE IF EXISTS TEAM;
+DROP TABLE IF EXISTS SCHOOL;
+
+/*Table Creation Statements*/
+CREATE TABLE &quot;Leagues&quot; (
+	&quot;league_number&quot;	INTEGER
+);
+CREATE TABLE &quot;Coaches&quot; (
+	&quot;Coach_ID&quot;	INTEGER NOT NULL PRIMARY KEY,
+	&quot;First_Name&quot;	TEXT NOT NULL,
+	&quot;Last_Name&quot;	TEXT NOT NULL,
+	&quot;DOB&quot;	TEXT NOT NULL,
+	&quot;Qualification_Level&quot;	INTEGER NOT NULL,
+	&quot;Team_ID&quot; 	INTEGER NOT NULL REFERENCES Team (Team_ID)
+);
+CREATE TABLE &quot;Contact&quot; (
+	&quot;Contact_ID&quot;	INTEGER NOT NULL PRIMARY KEY,
+	&quot;First_Name&quot;	TEXT NOT NULL,
+	&quot;Last_Name&quot;	TEXT NOT NULL,
+	&quot;Phone_Num&quot;	INTEGER NOT NULL,
+	&quot;Email&quot;	TEXT NOT NULL
+);
+CREATE TABLE &quot;Players&quot; (
+	&quot;Player_ID&quot;	INTEGER NOT NULL PRIMARY KEY,
+	&quot;First_Name&quot;	TEXT NOT NULL,
+	&quot;Last_Name&quot;	TEXT NOT NULL,
+	&quot;DOB&quot;	TEXT NOT NULL,
+	&quot;Team_ID&quot;	INTEGER NOT NULL REFERENCES Team (Team_ID),
+	&quot;Weight&quot;	INTEGER NOT NULL,
+	&quot;Contact_ID&quot;	INTEGER NOT NULL
+);
+
+CREATE TABLE &quot;School&quot; (
+	&quot;School_ID&quot;	INTEGER NOT NULL PRIMARY KEY,
+	&quot;School_Name&quot;	TEXT NOT NULL,
+	&quot;Address&quot;	TEXT NOT NULL
+);
+CREATE TABLE &quot;Team&quot; (
+	&quot;Team_ID&quot; INTEGER NOT NULL PRIMARY KEY,
+	&quot;Name&quot;	TEXT NOT NULL,
+	&quot;Level&quot;	INTEGER NOT NULL,
+	&quot;Sponser&quot;	TEXT NOT NULL,
+	&quot;Coach&quot;	TEXT NOT NULL,
+	&quot;Players&quot;	TEXT NOT NULL,
+	&quot;Wins&quot;	INTEGER NOT NULL,
+	&quot;Losses&quot;	INTEGER NOT NULL,
+	&quot;Ties&quot;	INTEGER NOT NULL
+);
+
+/* Creating Leagues */
+INSERT INTO Leagues VALUES (1);
+INSERT INTO Leagues VALUES (2);
+INSERT INTO Leagues VALUES (3);
+INSERT INTO Leagues VALUES (4);
+
+/* Data insertion for Teams */
+INSERT INTO Team (Name, Level, Sponser, Coach, Players, Wins, Losses, Ties, Team_ID)
+VALUES
+	('Jayhawks', 2, 'Grandville', 'John Doe', 'Jeff Doe', 6, 7, 1, 1),
+	('Diggities', 3, 'Middleville', 'Donald Trump', 'Melania Trump', 8, 5, 0, 2),
+	('Johhnys', 3, 'Hastings', 'Bobby Boy', 'Some Dudes', 9, 3, 1, 3);	
+
+/* Adding Coaches */
+INSERT INTO Coaches (Coach_ID, First_Name, Last_Name, DOB, Qualification_Level, Team_ID)
+VALUES
+	(1, 'John', 'Doe', '01/25/79', 2, 1),
+	(2, 'Donald', 'Trump', '06/14/46', 3, 2),
+	(3, 'Bobby', 'Boy', '02/22/83', 4, 3);
+	
+/* Adding Players */
+INSERT INTO Players (Player_ID, First_Name, Last_Name, DOB, Team_ID, Weight, Contact_ID)
+VALUES
+	(1, 'Chris', 'Mehoff', '01/23/94', 1, 165, 1),
+	(2, 'Jeff', 'Mehoff', '04/23/94', 1, 167, 1),
+	(3, 'Jack', 'Mehoff', '08/23/94', 1, 155, 1),
+	(4, 'The', 'Dude', '05/24/92', 2, 140, 2),
+	(5, 'A', 'Dude', '03/24/92', 2, 138, 2),
+	(6, 'Those', 'Dudes', '09/24/92', 2, 144, 2),
+	(7, 'Tom', 'Garble', '10/23/94', 3, 163, 3),
+	(8, 'Tommy', 'Garble', '11/23/94', 3, 169, 3),
+	(9, 'Thomas', 'Garble', '04/23/94', 3, 182, 3);
+	
+
+/* Adding Schools */
+INSERT INTO School (School_ID, School_Name, Address)
+VALUES
+	(1, 'Grandville', '1234 Chicago Drive'),
+	(2, 'Middleville', '123 High Street'),
+	(3, 'Hastings', '420 Daycare Drive');
+
+/* Adding Contacts */
+INSERT INTO Contact (Contact_ID, First_Name, Last_Name, Phone_Num, Email)
+VALUES
+	(1, 'Nurse', 'Joy', 8675309, 'asdadfg@gmail.com'),
+	(2, 'Officer', 'Jenny', 1234567, 'hkhkjgkl@yahoo.com'),
+	(3, 'Brock', 'Lesner', 8088008, 'yioutoit@hotmail.com');
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
